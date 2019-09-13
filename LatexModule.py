@@ -92,10 +92,13 @@ def createHREFlinkIfLink(link, alias_text):
 def compileXeLatex(tex_file_name, this_dir):
     print('Entering xetex compile')
     working_dir = this_dir
-    print('WorkingDir is' + working_dir)
-    subprocess.Popen(['xelatex', tex_file_name, '-synctex=1 -interaction=nonstopmode'], cwd=working_dir)
+    print('WorkingDir is ' + working_dir)
+    logfile = open(this_dir + '/tex.log', "w+")
+    print('Logs will be written to ', logfile.name)
+    subprocess.Popen(['xelatex', tex_file_name, '-synctex=1 -interaction=nonstopmode'], cwd=working_dir, stdout=logfile)
     time.sleep(3)
-    subprocess.Popen(['xelatex', tex_file_name, '-synctex=1 -interaction=nonstopmode'], cwd=working_dir)
+    subprocess.Popen(['xelatex', tex_file_name, '-synctex=1 -interaction=nonstopmode'], cwd=working_dir, stdout=logfile)
+    logfile.close()
 
     #os.unlink('%s.aux', file_name)
 
