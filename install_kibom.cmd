@@ -11,7 +11,7 @@ set curpath=%~dp0
 :: Checking if all python and other files needed during the process are in this folder
 ECHO Checking if all Files needed are in this folder
 
-if exist "%curpath%\KiBOMWithTeX.py" ( 
+if exist "%curpath%\KiBOMWithTeX_V1_3.py" ( 
 	if exist "%curpath%\LatexModule.py" (
 		echo All files found)
 	)else (ECHO Not all Files found.)
@@ -81,7 +81,7 @@ ECHO =========================
 
 :: Adding information to registry
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\KiBOMWithTeX" /v DisplayName /t REG_SZ /d "KiBOM with TeX"
-reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\KiBOMWithTeX" /v DisplayVersion /t REG_SZ /d 1.0
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\KiBOMWithTeX" /v DisplayVersion /t REG_SZ /d 1.3
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\KiBOMWithTeX" /v InstallLocation /t REG_SZ /d "%kicadLocation%\bin\scripting\plugins"
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\KiBOMWithTeX" /v NoModify /t REG_DWORD /d 1
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\KiBOMWithTeX" /v Publisher /t REG_SZ /d "Tabea"
