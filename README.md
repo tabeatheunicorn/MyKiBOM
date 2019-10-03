@@ -10,3 +10,8 @@ The stable Version is **KiBOMWithTeX_V1_3.py**
 ## How to Use
 When Opening EEScheme from KiCad, klick on the BOM-Button. This should generate an up-to-date netlist. Then choose the KiBOMWithTeX**.py-Plugin you want and create a KiBOM.
 From Version 1.1 on the commandline arguments allow to customize the generated .pdf file.
+
+### Example
+```python "C:\Program Files\KiCad\bin\scripting\plugins/KiBOMWithTeX_V1_3.py" "%I" "%O" "Path\to\a\picture" "NameOfThePDFAndTex"```
+
+Note that currently .svg pictures can't be used if you don't add that an extra package to the tex-file.
