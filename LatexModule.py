@@ -61,6 +61,7 @@ def makeTable(columnstring, lines_to_insert):
 # this creates a proper tabularx table. requires to load package longtable and booktabs
 def makeLongTable(columnstring, lines_to_insert):
     string = ('\n \\begin{tabularx}%s'% columnstring)
+    print(columnstring, "columnstring")
     string += '\n'
     string += '\\toprule \n'
     for line in lines_to_insert:
@@ -71,6 +72,7 @@ def makeLongTable(columnstring, lines_to_insert):
         string += '\\\\ \n'
     string += '\\bottomrule \n'
     string += '\end{tabularx} \n'
+    print(string)
     return string
 
 
@@ -88,16 +90,46 @@ def createHREFlinkIfLink(link, alias_text):
     else:
         return link
 
-# this function compiles with xetex
+
 def compileXeLatex(tex_file_name, this_dir):
+    ''' Compiling the given texfile in the given directory with xelatex (twice for labeling reasons etc.)
+
+        Args:
+            tex_file_name(string): Name of the tex file, should have ending .tex
+            this_dir(path): String that describes the absolute path of the folder the tex-file is in
+
+        Returns:
+            None
+    '''
     print('Entering xetex compile')
     working_dir = this_dir
-    print('WorkingDir is' + working_dir)
-    subprocess.Popen(['xelatex', tex_file_name, '-synctex=1 -interaction=nonstopmode'], cwd=working_dir)
-    time.sleep(3)
-    subprocess.Popen(['xelatex', tex_file_name, '-synctex=1 -interaction=nonstopmode'], cwd=working_dir)
+    print('WorkingDir is ' + working_dir)
+    logfile = open(this_dir + '/tex.log', "w+")
+    print('Logs will be written to ', logfile.name)
+    process = subprocess.Popen(['xelatex', tex_file_name, '-synctex=1 -interaction=nonstopmode'], cwd=working_dir, stdout=logfile)
+    process.wait() # execute the same command again once the first tex run is finished
+    subprocess.Popen(['xelatex', tex_file_name, '-synctex=1 -interaction=nonstopmode'], cwd=working_dir, stdout=logfile)
+    logfile.close()
 
-    #os.unlink('%s.aux', file_name)
+
+# currently not in use 
+
+def cleaningUpAfterLatexCompilation(folderpath, filename):
+    ''' Deletes all Files that were created in the process of creating the .pdf from tex file. Exentsions are
+        .aux, .log, .out and .synctex.gz
+        
+        Args:
+            folderpath (string): A String interpreted as path to the folder where the genereated files are.
+            filename (string): The name of the file without extension. Should be the same as the one of the .pdf document.
+        
+        Returns:
+            None.'''
+    extension_list = ['.aux', '.log', '.out', '.synctex.gz']
+    for extension in extension_list:
+        temp_filename = os.path.join(folderpath, (filename+extension))
+        if os.path.isfile(temp_filename):
+            os.remove(temp_filename)
+
 
 if __name__ == "__main__":
     writeDocumentClass('test.tex', 'scrartcl')
