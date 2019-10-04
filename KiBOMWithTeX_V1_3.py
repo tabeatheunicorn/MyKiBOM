@@ -180,7 +180,7 @@ if name_of_document != False:
     makeTeXFileFromFormatedBuffer(name_of_document, tabellen_string)
     print('Pdf is generated from ' + name_of_document)
     folder, file_name = os.path.split(name_of_document)
-    #Latex.compileXeLatex(file_name, folder) 
+    Latex.compileXeLatex(file_name, folder) 
     filename_without_extension, extension = os.path.splitext(file_name)
     print("searching for " + folder + '/' + filename_without_extension + '.pdf')
     if os.path.exists(folder + '/' + filename_without_extension + '.pdf'):
